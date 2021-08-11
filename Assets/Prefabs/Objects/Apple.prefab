@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 8940937420401465697}
   - component: {fileID: 8940937420401465698}
   - component: {fileID: 8940937420401465699}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Apple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,6 +234,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ebfc4e0a5bcb6ac4faf0484c01348575, type: 3}
       propertyPath: m_Name
       value: Apple.Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ebfc4e0a5bcb6ac4faf0484c01348575, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebfc4e0a5bcb6ac4faf0484c01348575, type: 3}
