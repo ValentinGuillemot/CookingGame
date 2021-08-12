@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20f7ffb92eb85e34280128d668f98397, type: 3}
-  m_Name: WarriorStats
+  m_Name: RangerStats
   m_EditorClassIdentifier: 
-  Life: 100
-  Mana: 40
-  Attack: 50
-  Magic: 0
-  Defense: 40
-  Fullness: 50
+  Life: 90
+  Mana: 70
+  Attack: 30
+  Magic: 30
+  Defense: 30
+  Fullness: 40

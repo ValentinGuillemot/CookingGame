@@ -5,7 +5,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField]
-    Stats characterStats;
+    protected Stats characterStats;
 
     private int maxHP;
     private int maxMP;
@@ -15,6 +15,14 @@ public class Character : MonoBehaviour
 
     [SerializeField]
     XRSocketCustom plate;
+
+    // Attack event
+    public delegate void AttackEvent(int strength);
+    public AttackEvent OnAttack;
+
+    [SerializeField]
+    float timeBetweenAttacks = 3f;
+    float currentTime;
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +34,21 @@ public class Character : MonoBehaviour
         // Runtime stats are created as a copy of the initial default stats
         characterStats = Instantiate<Stats>(characterStats);
         characterStats.Fullness = 0;
+
+        currentTime = timeBetweenAttacks;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Digestion (if fullness reaches 0, character can eat again)
-        characterStats.Fullness = Mathf.Max(0, characterStats.Fullness - Time.deltaTime * digestSpeed);
-        if (!canEat && characterStats.Fullness == 0)
-            canEat = true;
+        Digest();
+
+        currentTime -= Time.deltaTime;
+        if (currentTime <= 0f)
+        {
+            Attack();
+            currentTime = timeBetweenAttacks;
+        }
 
         if (canEat && plate.HasSelectedItem())
         {
@@ -46,6 +60,19 @@ public class Character : MonoBehaviour
                 plate.RemoveFood();
             }
         }
+    }
+
+    void Digest()
+    {
+        // If fullness reaches 0, character can eat again
+        characterStats.Fullness = Mathf.Max(0, characterStats.Fullness - Time.deltaTime * digestSpeed);
+        if (!canEat && characterStats.Fullness == 0)
+            canEat = true;
+    }
+
+    protected virtual void Attack()
+    {
+        OnAttack(characterStats.Attack);
     }
 
     void CheckMax()
@@ -60,4 +87,14 @@ public class Character : MonoBehaviour
             canEat = false;
     }
 
+    public void TakeDamage(int strength)
+    {
+        int damage = Mathf.Max(0, strength - characterStats.Defense);
+        characterStats.Life -= damage;
+    }
+
+    public bool IsDead()
+    {
+        return (characterStats.Life <= 0);
+    }
 }

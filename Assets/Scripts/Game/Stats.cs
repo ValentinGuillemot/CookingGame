@@ -17,19 +17,9 @@ public class Stats : ScriptableObject
 
     public float Fullness = 10;
 
-    public Stats(Stats copy)
-    {
-        Life = copy.Life;
-        Mana = copy.Mana;
-        Attack = copy.Attack;
-        Magic = copy.Magic;
-        Defense = copy.Defense;
-        Fullness = copy.Fullness;
-    }
-
     public static Stats operator +(Stats first, Stats second)
     {
-        Stats sumStat = new Stats(first);
+        Stats sumStat = first;
 
         sumStat.Life += second.Life;
         sumStat.Mana += second.Mana;

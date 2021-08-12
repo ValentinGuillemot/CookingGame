@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20f7ffb92eb85e34280128d668f98397, type: 3}
-  m_Name: WarriorStats
+  m_Name: MageStats
   m_EditorClassIdentifier: 
-  Life: 100
-  Mana: 40
-  Attack: 50
-  Magic: 0
-  Defense: 40
-  Fullness: 50
+  Life: 80
+  Mana: 100
+  Attack: 5
+  Magic: 30
+  Defense: 20
+  Fullness: 30
