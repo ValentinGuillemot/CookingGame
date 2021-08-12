@@ -10,17 +10,13 @@ public class Food : MonoBehaviour
     [SerializeField]
     private int preparedFoodLayer;
 
-    /* Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private Stats statsToGive;
 
-    // Update is called once per frame
-    void Update()
+    public Stats StatBoost
     {
-        
-    }*/
+        get { return statsToGive; }
+    }
 
     public void Cut()
     {

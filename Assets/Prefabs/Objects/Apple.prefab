@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 8940937420401465697}
   - component: {fileID: 8940937420401465698}
   - component: {fileID: 8940937420401465699}
+  - component: {fileID: -3579228523380705007}
   m_Layer: 7
   m_Name: Apple
   m_TagString: Untagged
@@ -168,6 +169,21 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
+--- !u!114 &-3579228523380705007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940937420401465708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c6e530d0d276a498f1dce9da701d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  halfMesh: {fileID: 6324286251053626827, guid: 80aa55ca95ff3884eaa9dbc03eec65e3, type: 3}
+  preparedFoodLayer: 6
+  statsToGive: {fileID: 11400000, guid: 9ef0f4bb0115cb84f9e4313cb1e12737, type: 2}
 --- !u!1001 &8940937419932240440
 PrefabInstance:
   m_ObjectHideFlags: 0
