@@ -30,7 +30,6 @@ public class Ranger : Character
 
     void RangerSpecial()
     {
-        Debug.Log("Ranger USED HIS SPECIAL !");
         int power = characterStats.Magic * specialAttackBoost;
         characterStats.Mana -= specialAttackManaCost;
         OnAttack(power);

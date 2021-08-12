@@ -30,7 +30,6 @@ public class Warrior : Character
 
     void WarriorSpecial()
     {
-        Debug.Log("WARRIOR USED HIS SPECIAL !");
         int attack = characterStats.Attack * 2;
         characterStats.Mana -= specialAttackManaCost;
         characterStats.Defense -= specialAttackDefenseCost;

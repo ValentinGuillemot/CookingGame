@@ -5,7 +5,7 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     [SerializeField]
-    private Mesh halfMesh;
+    private GameObject cutFoodPrefab;
 
     [SerializeField]
     private int preparedFoodLayer;
@@ -28,20 +28,11 @@ public class Food : MonoBehaviour
 
     private void InstantiateHalfFood(string nameSuffix, bool rotate = false)
     {
-        GameObject halfFood = Instantiate(this).gameObject;
-        halfFood.name = "HalfApple" + nameSuffix;
-        MeshFilter newMesh = halfFood.GetComponentInChildren<MeshFilter>();
-        if (newMesh)
-        {
-            newMesh.mesh = halfMesh;
-            newMesh.GetComponent<MeshCollider>().sharedMesh = halfMesh;
-            if (rotate)
-                newMesh.transform.Rotate(new Vector3(0f, 180f, 0f));
-        }
+        GameObject halfFood = Instantiate(cutFoodPrefab, transform.position, transform.rotation, null).gameObject;
+        halfFood.name = "Half" + name + nameSuffix;
         halfFood.layer = preparedFoodLayer;
-        foreach (Transform childTransform in halfFood.GetComponentInChildren<Transform>())
-        {
-            childTransform.gameObject.layer = preparedFoodLayer;
-        }
+        if (rotate)
+            halfFood.transform.Rotate(new Vector3(0f, 180f, 0f));
+        halfFood.GetComponentInChildren<Food>().statsToGive = statsToGive;
     }
 }

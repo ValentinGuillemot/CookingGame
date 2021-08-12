@@ -47,7 +47,6 @@ public class Mage : Character
 
     void CastSpell(int manaCost, int magicBoost)
     {
-        Debug.Log("Mage USED A SPELL BOOSTED BY " + magicBoost + "!");
         int power = characterStats.Magic * magicBoost;
         characterStats.Mana -= manaCost;
         OnAttack(power);
