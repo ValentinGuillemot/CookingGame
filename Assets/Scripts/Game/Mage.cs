@@ -50,5 +50,6 @@ public class Mage : Character
         int power = characterStats.Magic * magicBoost;
         characterStats.Mana -= manaCost;
         OnAttack(power);
+        UpdateUI();
     }
 }

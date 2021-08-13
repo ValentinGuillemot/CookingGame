@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Character : MonoBehaviour
 {
@@ -33,6 +34,20 @@ public class Character : MonoBehaviour
     float timeBetweenUtilitiesCheck = 5f;
     float utilityTime = 0f;
 
+    // UI
+    [SerializeField]
+    SpriteRenderer healthBar;
+    [SerializeField]
+    SpriteRenderer manaBar;
+    [SerializeField]
+    TextMeshPro attackDisplay;
+    [SerializeField]
+    TextMeshPro magicDisplay;
+    [SerializeField]
+    TextMeshPro defenseDisplay;
+    [SerializeField]
+    SpriteRenderer fullnessBar;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +63,8 @@ public class Character : MonoBehaviour
         utilityTime = timeBetweenUtilitiesCheck;
 
         plate.onSelectFood += EatFood;
+
+        UpdateUI();
     }
 
     // Update is called once per frame
@@ -95,6 +112,7 @@ public class Character : MonoBehaviour
             {
                 characterStats += toEat.StatBoost;
                 CheckMax();
+                UpdateUI();
                 hasEaten = true;
             }
         }
@@ -102,10 +120,14 @@ public class Character : MonoBehaviour
 
     void Digest()
     {
+        if (characterStats.Fullness == 0)
+            return;
+
         // If fullness reaches 0, character can eat again
         characterStats.Fullness = Mathf.Max(0, characterStats.Fullness - Time.deltaTime * digestSpeed);
         if (!canEat && characterStats.Fullness == 0)
         {
+            fullnessBar.color = Color.yellow;
             canEat = true;
             if (willEat)
             {
@@ -113,6 +135,10 @@ public class Character : MonoBehaviour
                 EatFood();
             }
         }
+
+        // Update fullness gauge
+        float fullnessRatio = Mathf.Clamp(characterStats.Fullness / maxFullness, 0f, 1f);
+        fullnessBar.transform.localScale = new Vector3(3 * fullnessRatio, 0.5f, 1f);
     }
 
     protected virtual void AskForBoost()
@@ -149,19 +175,33 @@ public class Character : MonoBehaviour
         if (characterStats.Mana > maxMP)
             characterStats.Mana = maxMP;
 
-        Debug.Log("Current fullness = " + characterStats.Fullness + " / " + maxFullness);
         if (characterStats.Fullness > maxFullness)
+        {
+            fullnessBar.color = Color.red;
             canEat = false;
+        }
     }
 
     public void TakeDamage(int strength)
     {
-        int damage = Mathf.Max(0, strength - characterStats.Defense);
+        int damage = Mathf.Max(1, strength - characterStats.Defense);
         characterStats.Life -= damage;
+        UpdateUI();
     }
 
     public bool IsDead()
     {
         return (characterStats.Life <= 0);
+    }
+
+    protected void UpdateUI()
+    {
+        healthBar.transform.localScale = new Vector3(3 * (float)characterStats.Life / (float)maxHP, 0.5f, 1f);
+        manaBar.transform.localScale = new Vector3(3 * (float)characterStats.Mana / (float)maxMP, 0.5f, 1f);
+        attackDisplay.text = "Attack: " + characterStats.Attack;
+        magicDisplay.text = "Magic: " + characterStats.Magic;
+        defenseDisplay.text = "Defense: " + characterStats.Defense;
+        float fullnessRatio = Mathf.Clamp(characterStats.Fullness / maxFullness, 0f, 1f);
+        fullnessBar.transform.localScale = new Vector3(3 * fullnessRatio, 0.5f, 1f);
     }
 }

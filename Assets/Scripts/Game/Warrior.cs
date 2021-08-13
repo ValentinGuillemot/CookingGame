@@ -34,5 +34,6 @@ public class Warrior : Character
         characterStats.Mana -= specialAttackManaCost;
         characterStats.Defense -= specialAttackDefenseCost;
         OnAttack(attack);
+        UpdateUI();
     }
 }

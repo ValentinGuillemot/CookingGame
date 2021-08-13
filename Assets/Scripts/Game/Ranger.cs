@@ -37,9 +37,10 @@ public class Ranger : Character
         int power = characterStats.Magic * specialAttackBoost;
         characterStats.Mana -= specialAttackManaCost;
         OnAttack(power);
+        UpdateUI();
     }
 
-    protected virtual void AskForBoost()
+    protected override void AskForBoost()
     {
         if (utilities.Count <= 0)
             return;
