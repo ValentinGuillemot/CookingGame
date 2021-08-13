@@ -56,7 +56,7 @@ public class BattleManager : MonoBehaviour
         int nbOfSec = (int)timeScore;
         int nbOfDec = (int)((timeScore - nbOfSec) * 100f);
         string decimalPart = (nbOfDec < 10) ? "0" + nbOfDec.ToString() : nbOfDec.ToString();
-        timeDisplay.text = nbOfSec.ToString() + ":" +decimalPart;
+        timeDisplay.text = nbOfSec.ToString() + ":" + decimalPart;
     }
 
     void AttackCharacter()

@@ -138,7 +138,7 @@ public class Character : MonoBehaviour
 
         // Update fullness gauge
         float fullnessRatio = Mathf.Clamp(characterStats.Fullness / maxFullness, 0f, 1f);
-        fullnessBar.transform.localScale = new Vector3(3 * fullnessRatio, 0.5f, 1f);
+        fullnessBar.transform.parent.localScale = new Vector3(3 * fullnessRatio, 0.5f, 1f);
     }
 
     protected virtual void AskForBoost()
@@ -196,12 +196,12 @@ public class Character : MonoBehaviour
 
     protected void UpdateUI()
     {
-        healthBar.transform.localScale = new Vector3(3 * (float)characterStats.Life / (float)maxHP, 0.5f, 1f);
-        manaBar.transform.localScale = new Vector3(3 * (float)characterStats.Mana / (float)maxMP, 0.5f, 1f);
+        healthBar.transform.parent.localScale = new Vector3(3 * (float)characterStats.Life / (float)maxHP, 0.5f, 1f);
+        manaBar.transform.parent.localScale = new Vector3(3 * (float)characterStats.Mana / (float)maxMP, 0.5f, 1f);
         attackDisplay.text = "Attack: " + characterStats.Attack;
         magicDisplay.text = "Magic: " + characterStats.Magic;
         defenseDisplay.text = "Defense: " + characterStats.Defense;
         float fullnessRatio = Mathf.Clamp(characterStats.Fullness / maxFullness, 0f, 1f);
-        fullnessBar.transform.localScale = new Vector3(3 * fullnessRatio, 0.5f, 1f);
+        fullnessBar.transform.parent.localScale = new Vector3(3 * fullnessRatio, 0.5f, 1f);
     }
 }

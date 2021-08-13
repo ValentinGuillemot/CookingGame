@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutFoodPrefab: {fileID: 8107371303147106316, guid: 32838e9b38366744596336f1e9b12615, type: 3}
   preparedFoodLayer: 6
-  statsToGive: {fileID: 11400000, guid: 7b6967da4311fd648bdfb33c01884089, type: 2}
+  statsToGive: {fileID: 11400000, guid: 86b10b8a5490d844baa8cc0c066edc0c, type: 2}
 --- !u!1001 &215912178735317861
 PrefabInstance:
   m_ObjectHideFlags: 0
