@@ -11,6 +11,8 @@ public class Character : MonoBehaviour
     private int maxMP;
     private float maxFullness;
     private bool canEat = true;
+    private bool willEat = false;
+    private bool hasEaten = false;
     private float digestSpeed = 2f;
 
     [SerializeField]
@@ -36,6 +38,8 @@ public class Character : MonoBehaviour
         characterStats.Fullness = 0;
 
         currentTime = timeBetweenAttacks;
+
+        plate.onSelectFood += EatFood;
     }
 
     // Update is called once per frame
@@ -50,14 +54,30 @@ public class Character : MonoBehaviour
             currentTime = timeBetweenAttacks;
         }
 
-        if (canEat && plate.HasSelectedItem())
+        // Must be done in update outside of EatFood function to prevent errors in XRInteractionManager
+        if (hasEaten)
+        {
+            plate.RemoveFood();
+            hasEaten = false;
+        }
+    }
+
+    void EatFood()
+    {
+        if (!canEat)
+        {
+            willEat = true;
+            return;
+        }
+
+        if (plate.HasSelectedItem())
         {
             Food toEat = plate.GetFoodFromPlate();
             if (toEat)
             {
                 characterStats += toEat.StatBoost;
                 CheckMax();
-                plate.RemoveFood();
+                hasEaten = true;
             }
         }
     }
@@ -67,7 +87,14 @@ public class Character : MonoBehaviour
         // If fullness reaches 0, character can eat again
         characterStats.Fullness = Mathf.Max(0, characterStats.Fullness - Time.deltaTime * digestSpeed);
         if (!canEat && characterStats.Fullness == 0)
+        {
             canEat = true;
+            if (willEat)
+            {
+                willEat = false;
+                EatFood();
+            }
+        }
     }
 
     protected virtual void Attack()
@@ -83,6 +110,7 @@ public class Character : MonoBehaviour
         if (characterStats.Mana > maxMP)
             characterStats.Mana = maxMP;
 
+        Debug.Log("Current fullness = " + characterStats.Fullness + " / " + maxFullness);
         if (characterStats.Fullness > maxFullness)
             canEat = false;
     }

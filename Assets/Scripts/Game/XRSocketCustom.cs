@@ -6,9 +6,16 @@ using UnityEngine.XR.Interaction.Toolkit;
 // Custom Socket used for the plates
 public class XRSocketCustom : XRSocketInteractor
 {
+    public delegate void SelectFoodEvent();
+    public SelectFoodEvent onSelectFood;
+
     public override bool CanSelect(XRBaseInteractable interactable)
     {
-        return (interactionLayerMask == (interactionLayerMask | 1 << interactable.gameObject.layer));
+        bool result = (interactionLayerMask == (interactionLayerMask | 1 << interactable.gameObject.layer));
+        if (result && onSelectFood != null)
+            onSelectFood();
+
+        return result;
     }
 
     public bool HasSelectedItem()

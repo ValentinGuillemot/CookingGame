@@ -13,6 +13,9 @@ public class Food : MonoBehaviour
     [SerializeField]
     private Stats statsToGive;
 
+    public delegate void DestroyEvent();
+    public DestroyEvent onDestroy;
+
     public Stats StatBoost
     {
         get { return statsToGive; }
@@ -22,6 +25,9 @@ public class Food : MonoBehaviour
     {
         InstantiateHalfFood("1");
         InstantiateHalfFood("2", true);
+
+        if (onDestroy != null)
+            onDestroy();
 
         Destroy(gameObject);
     }
