@@ -13,6 +13,10 @@ public class Ranger : Character
     [SerializeField]
     int normalAttackProbability = 2;
 
+    // Specific utility to store an action when attack is higher than magic
+    [SerializeField]
+    Utility alternateUtility;
+
     protected override void Attack()
     {
         bool canUseSpecial = (characterStats.Mana >= specialAttackManaCost);
@@ -33,5 +37,29 @@ public class Ranger : Character
         int power = characterStats.Magic * specialAttackBoost;
         characterStats.Mana -= specialAttackManaCost;
         OnAttack(power);
+    }
+
+    protected virtual void AskForBoost()
+    {
+        if (utilities.Count <= 0)
+            return;
+
+        int bestUtilityId = 0;
+        float bestUtility = 0f;
+
+        for (int i = 0; i < utilities.Count; i++)
+        {
+            float currentUtility = utilities[i].GetUtility(characterStats, maxHP, maxMP);
+            if (currentUtility > bestUtility)
+            {
+                bestUtility = currentUtility;
+                bestUtilityId = i;
+            }
+        }
+
+        if (utilities[bestUtilityId].Stat == Stats.EStatType.Attack && characterStats.Attack > characterStats.Magic)
+            alternateUtility.DoAction();
+        else
+            utilities[bestUtilityId].DoAction();
     }
 }

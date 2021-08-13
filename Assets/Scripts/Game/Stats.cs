@@ -5,6 +5,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewStats", menuName = "ScriptableObjects/Stats", order = 1)]
 public class Stats : ScriptableObject
 {
+    public enum EStatType
+    {
+        Life = 0,
+        Mana,
+        Attack,
+        Magic,
+        Defense,
+        Fullness
+    }
+
     public int Life = 10;
 
     public int Mana = 10;

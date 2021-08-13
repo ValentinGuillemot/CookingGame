@@ -7,8 +7,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     protected Stats characterStats;
 
-    private int maxHP;
-    private int maxMP;
+    protected int maxHP;
+    protected int maxMP;
     private float maxFullness;
     private bool canEat = true;
     private bool willEat = false;
@@ -26,6 +26,13 @@ public class Character : MonoBehaviour
     float timeBetweenAttacks = 3f;
     float currentTime;
 
+    [SerializeField]
+    protected List<Utility> utilities;
+
+    [SerializeField]
+    float timeBetweenUtilitiesCheck = 5f;
+    float utilityTime = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +45,7 @@ public class Character : MonoBehaviour
         characterStats.Fullness = 0;
 
         currentTime = timeBetweenAttacks;
+        utilityTime = timeBetweenUtilitiesCheck;
 
         plate.onSelectFood += EatFood;
     }
@@ -52,6 +60,16 @@ public class Character : MonoBehaviour
         {
             Attack();
             currentTime = timeBetweenAttacks;
+        }
+
+        if (canEat)
+        {
+            utilityTime -= Time.deltaTime;
+            if (utilityTime <= 0f)
+            {
+                AskForBoost();
+                utilityTime = timeBetweenUtilitiesCheck;
+            }
         }
 
         // Must be done in update outside of EatFood function to prevent errors in XRInteractionManager
@@ -95,6 +113,27 @@ public class Character : MonoBehaviour
                 EatFood();
             }
         }
+    }
+
+    protected virtual void AskForBoost()
+    {
+        if (utilities.Count <= 0)
+            return;
+
+        int bestUtilityId = 0;
+        float bestUtility = 0f;
+
+        for (int i = 0; i < utilities.Count; i++)
+        {
+            float currentUtility = utilities[i].GetUtility(characterStats, maxHP, maxMP);
+            if (currentUtility > bestUtility)
+            {
+                bestUtility = currentUtility;
+                bestUtilityId = i;
+            }
+        }
+
+        utilities[bestUtilityId].DoAction();
     }
 
     protected virtual void Attack()
