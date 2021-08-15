@@ -21,6 +21,9 @@ public class Food : MonoBehaviour
         get { return statsToGive; }
     }
 
+    /// <summary>
+	/// Cut the food in two new game objects
+	/// </summary>
     public void Cut()
     {
         InstantiateHalfFood("1");
@@ -32,6 +35,11 @@ public class Food : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+	/// Instantiate a half of the cut object
+	/// </summary>
+	/// <param name="nameSuffix">Suffix at the end of new gameObject name</param>
+	/// <param name="rotate">Whether the gameObject should be rotated (180 degrees along y axis) or not</param>
     private void InstantiateHalfFood(string nameSuffix, bool rotate = false)
     {
         GameObject halfFood = Instantiate(cutFoodPrefab, transform.position, transform.rotation, null).gameObject;

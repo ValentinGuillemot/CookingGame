@@ -5,24 +5,22 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField]
-    Food foodToCheck;
+    private Food foodToCheck;
 
     [SerializeField]
-    GameObject prefabToSpawn;
+    private GameObject prefabToSpawn;
 
     [SerializeField]
-    float timeToSpawn = 5f;
-    float currentTime = 0f;
-    private bool isSpawning;
+    private float timeToSpawn = 5f;
+    private float currentTime = 0f;
+    private bool isSpawning = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         foodToCheck.onDestroy += SetSpawn;
         currentTime = timeToSpawn;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isSpawning)
@@ -38,6 +36,9 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+	/// Allow the component to spawn game objects
+	/// </summary>
     void SetSpawn()
     {
         isSpawning = true;

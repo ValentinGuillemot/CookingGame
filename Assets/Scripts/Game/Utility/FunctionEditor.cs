@@ -18,6 +18,7 @@ public class FunctionEditor : Editor
     {
         base.OnInspectorGUI();
 
+        // Drawing zone to display what the function looks like on a scale from 0 to 1
         Rect rect = GUILayoutUtility.GetRect(10, 1000, 150, 150);
         if (Event.current.type == EventType.Repaint)
         {

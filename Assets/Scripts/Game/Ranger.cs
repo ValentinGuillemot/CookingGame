@@ -5,17 +5,17 @@ using UnityEngine;
 public class Ranger : Character
 {
     [SerializeField]
-    int specialAttackManaCost = 5;
+    private int specialAttackManaCost = 5;
 
     [SerializeField]
-    int specialAttackBoost = 2;
+    private int specialAttackBoost = 2;
 
     [SerializeField]
-    int normalAttackProbability = 2;
+    private int normalAttackProbability = 2;
 
     // Specific utility to store an action when attack is higher than magic
     [SerializeField]
-    Utility alternateUtility;
+    private Utility alternateUtility;
 
     protected override void Attack()
     {

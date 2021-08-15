@@ -7,10 +7,10 @@ using UnityEngine;
 public class Utility
 {
     [SerializeField]
-    string actionText;
+    private string actionText;
 
     [SerializeField]
-    Stats.EStatType statToCheck;
+    private Stats.EStatType statToCheck;
 
     public Stats.EStatType Stat
     {
@@ -18,9 +18,14 @@ public class Utility
     }
 
     [SerializeField]
-    Function function;
+    private Function function;
 
-    // Max values added to make HP and MP percentage
+    /// <summary>
+	/// Get utility depending on stat to check and used function
+	/// </summary>
+	/// <param name="givenStats">Stats to check values from</param>
+	/// <param name="maxHP">Max HP needed to make ratio with stats HP</param>
+	/// <param name="maxMP">Max MP needed to make ratio with stats MP</param>
     public float GetUtility(Stats givenStats, int maxHP = 0, int maxMP = 0)
     {
         float neededStat = 0f;
@@ -48,6 +53,9 @@ public class Utility
         return function.GetValue(neededStat);
     }
 
+    /// <summary>
+	/// Display as a Debug Log the action stored in the utility
+	/// </summary>
     public void DoAction()
     {
         Debug.Log(actionText);

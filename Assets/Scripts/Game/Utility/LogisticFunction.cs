@@ -6,13 +6,13 @@ using UnityEngine;
 public class LogisticFunction : Function
 {
     [SerializeField]
-    float middle = 0.5f;
+    private float middle = 0.5f;
 
     [SerializeField]
-    float slopeCoef = 10.0f;
+    private float slopeCoef = 10.0f;
 
     [SerializeField]
-    float offset = 0f;
+    private float offset = 0f;
 
     public override float GetValue(float x)
     {

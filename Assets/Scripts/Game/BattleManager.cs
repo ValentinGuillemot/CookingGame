@@ -6,14 +6,14 @@ using TMPro;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField]
-    List<Character> party;
+    private List<Character> party;
 
     [SerializeField]
-    float timeBetweenEnemyAttacks = 5f;
-    float currentTime = 0f;
+    private float timeBetweenEnemyAttacks = 5f;
+    private float currentTime = 0f;
 
     [SerializeField]
-    int enemyStrength;
+    private int enemyStrength;
 
     //Scores
     public float timeScore = 0f;
@@ -21,11 +21,10 @@ public class BattleManager : MonoBehaviour
 
     // UI
     [SerializeField]
-    TextMeshPro timeDisplay;
+    private TextMeshPro timeDisplay;
     [SerializeField]
-    TextMeshPro scoreDisplay;
+    private TextMeshPro scoreDisplay;
 
-    // Start is called before the first frame update
     void Start()
     {
         currentTime = timeBetweenEnemyAttacks;
@@ -39,7 +38,6 @@ public class BattleManager : MonoBehaviour
         scoreDisplay.text = "0";
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (party.Count <= 0)
@@ -52,6 +50,7 @@ public class BattleManager : MonoBehaviour
             currentTime = timeBetweenEnemyAttacks;
         }
 
+        // Update time UI
         timeScore += Time.deltaTime;
         int nbOfSec = (int)timeScore;
         int nbOfDec = (int)((timeScore - nbOfSec) * 100f);
@@ -59,6 +58,9 @@ public class BattleManager : MonoBehaviour
         timeDisplay.text = nbOfSec.ToString() + ":" + decimalPart;
     }
 
+    /// <summary>
+    /// Deal damage to one random character in the party
+    /// </summary>
     void AttackCharacter()
     {
         int target = Random.Range(0, party.Count);
@@ -72,7 +74,10 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // Called each time a character attacks;
+    /// <summary>
+    /// Called each time a character attacks
+    /// </summary>
+    /// <param name="attackStrength">Damage dealt by the character attack</param>
     void UpdateDamageScore(int attackStrength)
     {
         damageScore += attackStrength;

@@ -5,13 +5,13 @@ using UnityEngine;
 public class Warrior : Character
 {
     [SerializeField]
-    int specialAttackManaCost = 10;
+    private int specialAttackManaCost = 10;
 
     [SerializeField]
-    int specialAttackDefenseCost = 5;
+    private int specialAttackDefenseCost = 5;
 
     [SerializeField]
-    int normalAttackProbability = 2;
+    private int normalAttackProbability = 2;
 
     protected override void Attack()
     {

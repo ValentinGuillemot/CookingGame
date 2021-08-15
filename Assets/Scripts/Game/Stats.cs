@@ -41,6 +41,9 @@ public class Stats : ScriptableObject
         return sumStat;
     }
 
+    /// <summary>
+	/// Debug function used to display stats as Debug Log
+	/// </summary>
     public void DisplayStats()
     {
         Debug.Log("Life=" + Life + " ; Mana=" + Mana + " ; Atk=" + Attack + " ; Mag=" + Magic + " ; Def=" + Defense + " ; Full=" + Fullness);

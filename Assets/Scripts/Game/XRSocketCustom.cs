@@ -11,6 +11,7 @@ public class XRSocketCustom : XRSocketInteractor
 
     public override bool CanSelect(XRBaseInteractable interactable)
     {
+        // Use the XRSocket layermask to check if interactable can be selected (not working with default XRSocketInteractor
         bool result = (interactionLayerMask == (interactionLayerMask | 1 << interactable.gameObject.layer));
         if (result && onSelectFood != null)
             onSelectFood();
@@ -23,6 +24,9 @@ public class XRSocketCustom : XRSocketInteractor
         return (selectTarget != null);
     }
 
+    /// <summary>
+	/// Return Food component of currently selected interactable
+	/// </summary>
     public Food GetFoodFromPlate()
     {
         if (!selectTarget)
@@ -31,6 +35,9 @@ public class XRSocketCustom : XRSocketInteractor
         return selectTarget.GetComponent<Food>();
     }
 
+    /// <summary>
+	/// Destroy currently selected interactable
+	/// </summary>
     public void RemoveFood()
     {
         if (selectTarget)

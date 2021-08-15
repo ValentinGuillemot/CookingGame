@@ -5,19 +5,19 @@ using UnityEngine;
 public class Mage : Character
 {
     [SerializeField]
-    int basicSpellManaCost = 5;
+    private int basicSpellManaCost = 5;
 
     [SerializeField]
-    int basicSpellDamageBoost = 2;
+    private int basicSpellDamageBoost = 2;
 
     [SerializeField]
-    int strongSpellManaCost = 20;
+    private int strongSpellManaCost = 20;
 
     [SerializeField]
-    int strongSpellDamageBoost = 10;
+    private int strongSpellDamageBoost = 10;
 
     [SerializeField]
-    int basicSpellProbability = 2;
+    private int basicSpellProbability = 2;
 
     protected override void Attack()
     {
@@ -45,6 +45,11 @@ public class Mage : Character
             CastSpell(basicSpellManaCost, basicSpellDamageBoost);
     }
 
+    /// <summary>
+	/// Call Attack event with Magic stat
+	/// </summary>
+	/// <param name="manaCost">MP to remove from the character to use the spell</param>
+	/// <param name="magicBoost">Multiply ratio to increase damage given to Attack event</param>
     void CastSpell(int manaCost, int magicBoost)
     {
         int power = characterStats.Magic * magicBoost;

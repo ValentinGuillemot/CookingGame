@@ -6,13 +6,13 @@ using UnityEngine;
 public class StepFunction : Function
 {
     [SerializeField]
-    float step = 0.5f;
+    private float step = 0.5f;
 
     [SerializeField]
-    float valueUnderStep = 0.0f;
+    private float valueUnderStep = 0.0f;
 
     [SerializeField]
-    float valueAboveStep = 1.0f;
+    private float valueAboveStep = 1.0f;
 
     public override float GetValue(float x)
     {

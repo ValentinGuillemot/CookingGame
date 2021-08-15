@@ -6,35 +6,23 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class CookingTool : MonoBehaviour
 {
     [SerializeField]
-    private bool bCanCut = false;
+    private bool canCut = false;
 
     [SerializeField]
     private LayerMask foodmask;
 
-    /* Start is called before the first frame update
-    void Start()
+    /// <summary>
+	/// Update cutting state
+	/// </summary>
+	/// <param name="newCanCut">True to make the tool able to cut and false to remove its ability</param>
+    public void CuttingState(bool newCanCut)
     {
-    }
-
-    /* Update is called once per frame
-    void Update()
-    {
-        
-    }*/
-
-    public void DebugCall()
-    {
-        Debug.Log("Debug has been called");
-    }
-
-    public void CuttingState(bool canCut)
-    {
-        bCanCut = canCut;
+        canCut = newCanCut;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!bCanCut)
+        if (!canCut)
             return;
 
         if (foodmask == (foodmask | 1 << other.gameObject.layer))

@@ -17,38 +17,37 @@ public class Character : MonoBehaviour
     private float digestSpeed = 2f;
 
     [SerializeField]
-    XRSocketCustom plate;
+    private XRSocketCustom plate;
 
     // Attack event
     public delegate void AttackEvent(int strength);
     public AttackEvent OnAttack;
 
     [SerializeField]
-    float timeBetweenAttacks = 3f;
-    float currentTime;
+    private float timeBetweenAttacks = 3f;
+    private float currentTime;
 
     [SerializeField]
     protected List<Utility> utilities;
 
     [SerializeField]
-    float timeBetweenUtilitiesCheck = 5f;
-    float utilityTime = 0f;
+    private float timeBetweenUtilitiesCheck = 5f;
+    private float utilityTime = 0f;
 
     // UI
     [SerializeField]
-    SpriteRenderer healthBar;
+    private SpriteRenderer healthBar;
     [SerializeField]
-    SpriteRenderer manaBar;
+    private SpriteRenderer manaBar;
     [SerializeField]
-    TextMeshPro attackDisplay;
+    private TextMeshPro attackDisplay;
     [SerializeField]
-    TextMeshPro magicDisplay;
+    private TextMeshPro magicDisplay;
     [SerializeField]
-    TextMeshPro defenseDisplay;
+    private TextMeshPro defenseDisplay;
     [SerializeField]
-    SpriteRenderer fullnessBar;
+    private SpriteRenderer fullnessBar;
 
-    // Start is called before the first frame update
     void Start()
     {
         maxHP = characterStats.Life;
@@ -67,9 +66,11 @@ public class Character : MonoBehaviour
         UpdateUI();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (IsDead())
+            return;
+
         Digest();
 
         currentTime -= Time.deltaTime;
@@ -79,6 +80,7 @@ public class Character : MonoBehaviour
             currentTime = timeBetweenAttacks;
         }
 
+        // Run utility system
         if (canEat)
         {
             utilityTime -= Time.deltaTime;
@@ -97,8 +99,14 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Receive stats bonus from food currently stored in plate
+    /// </summary>
     void EatFood()
     {
+        if (IsDead())
+            return;
+
         if (!canEat)
         {
             willEat = true;
@@ -118,6 +126,9 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gradually reduce fullness over time
+    /// </summary>
     void Digest()
     {
         if (characterStats.Fullness == 0)
@@ -141,6 +152,9 @@ public class Character : MonoBehaviour
         fullnessBar.transform.parent.localScale = new Vector3(3 * fullnessRatio, 0.5f, 1f);
     }
 
+    /// <summary>
+    /// Utility system to ask for specific boost
+    /// </summary>
     protected virtual void AskForBoost()
     {
         if (utilities.Count <= 0)
@@ -149,6 +163,7 @@ public class Character : MonoBehaviour
         int bestUtilityId = 0;
         float bestUtility = 0f;
 
+        // Loop through all utilities to find most needed one
         for (int i = 0; i < utilities.Count; i++)
         {
             float currentUtility = utilities[i].GetUtility(characterStats, maxHP, maxMP);
@@ -162,11 +177,17 @@ public class Character : MonoBehaviour
         utilities[bestUtilityId].DoAction();
     }
 
+    /// <summary>
+    /// Call Attack event
+    /// </summary>
     protected virtual void Attack()
     {
         OnAttack(characterStats.Attack);
     }
 
+    /// <summary>
+    /// Clamp current stats inside gauges (HP, MP, Fullness)
+    /// </summary>
     void CheckMax()
     {
         if (characterStats.Life > maxHP)
@@ -177,23 +198,36 @@ public class Character : MonoBehaviour
 
         if (characterStats.Fullness > maxFullness)
         {
-            fullnessBar.color = Color.red;
+            if (fullnessBar)
+                fullnessBar.color = Color.red;
             canEat = false;
         }
     }
 
+    /// <summary>
+    /// Reduce HP depending on defense and input strength
+    /// </summary>
+    /// /// <param name="strength">damage to deal to the character (reduced by defense stat)</param>
     public void TakeDamage(int strength)
     {
         int damage = Mathf.Max(1, strength - characterStats.Defense);
         characterStats.Life -= damage;
-        UpdateUI();
+
+        if (!IsDead())
+            UpdateUI();
     }
 
+    /// <summary>
+    /// Return true if HP have reached 0
+    /// </summary>
     public bool IsDead()
     {
         return (characterStats.Life <= 0);
     }
 
+    /// <summary>
+    /// Update UI with current stats
+    /// </summary>
     protected void UpdateUI()
     {
         healthBar.transform.parent.localScale = new Vector3(3 * (float)characterStats.Life / (float)maxHP, 0.5f, 1f);

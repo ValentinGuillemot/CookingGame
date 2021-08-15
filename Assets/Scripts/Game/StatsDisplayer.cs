@@ -6,32 +6,34 @@ using TMPro;
 public class StatsDisplayer : MonoBehaviour
 {
     [SerializeField]
-    Stats statsToDisplay;
+    private Stats statsToDisplay;
 
     [SerializeField]
-    TextMeshPro HPText;
+    private TextMeshPro HPText;
 
     [SerializeField]
-    TextMeshPro MPText;
+    private TextMeshPro MPText;
 
     [SerializeField]
-    TextMeshPro AttackText;
+    private TextMeshPro AttackText;
 
     [SerializeField]
-    TextMeshPro MagicText;
+    private TextMeshPro MagicText;
 
     [SerializeField]
-    TextMeshPro DefenseText;
+    private TextMeshPro DefenseText;
 
     [SerializeField]
-    TextMeshPro FullnessText;
+    private TextMeshPro FullnessText;
 
-    // Start is called before the first frame update
     void Start()
     {
         UpdateUI();
     }
 
+    /// <summary>
+	/// Change texts to fit current stats
+	/// </summary>
     void UpdateUI()
     {
         HPText.text = "HP: " + statsToDisplay.Life.ToString();

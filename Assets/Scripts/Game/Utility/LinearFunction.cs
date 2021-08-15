@@ -6,11 +6,11 @@ using UnityEngine;
 public class LinearFunction : Function
 {
     [SerializeField]
-    float slope = 1.0f;
+    private float slope = 1.0f;
 
     // y value for x = 0
     [SerializeField]
-    float offset = 0.0f;
+    private float offset = 0.0f;
 
     public override float GetValue(float x)
     {

@@ -8428,7 +8428,7 @@ MonoBehaviour:
   - {fileID: 1792432659}
   - {fileID: 1948645403}
   - {fileID: 293956460}
-  timeBetweenEnemyAttacks: 5
+  timeBetweenEnemyAttacks: 10
   enemyStrength: 50
   timeScore: 0
   damageScore: 0
